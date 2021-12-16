@@ -14,8 +14,9 @@ pipeline {
             }
         }
         stage('Deploy') {
-        sshagent(['tomcat-new'])
+            
             steps {
+               sshagent(['tomcat-new'])
                 sh "scp -o StrictHostKeyChecking=no target/myweb.war  ec2-user@172.31.81.46:/home/ec2-user/apache-tomcat-9.0.56/webapps/"
                 sh "ssh ec2-user@172.31.81.46 /home/ec2-user/apache-tomcat-9.0.52/bin/shutdown.sh"
                 sh "ssh ec2-user@172.31.81.46 /home/ec2-user/apache-tomcat-9.0.52/bin/startup.sh"
